@@ -39,9 +39,10 @@ const createUser = async (req, res) => {
 };
 const uppdateUser = async (req, res) => {
   try {
-    console.log(req.user._id);
     const { name, about } = req.body;
-    const newUserData = await User.findByIdAndUpdate(req.user._id, { name, about }).orFail(() => new Error('NotFoundError'));
+    const newUserData = await User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true }).orFail(
+      () => new Error('NotFoundError')
+    );
     res.status(200).send(newUserData);
   } catch (error) {
     if (error.message === 'NotFoundError') {
@@ -56,7 +57,7 @@ const uppdateUser = async (req, res) => {
 const uppdateAvatarUser = async (req, res) => {
   try {
     const { avatar } = req.body;
-    const newUserAvatar = await User.findByIdAndUpdate(req.params.id, avatar).orFail(() => new Error('NotFoundError'));
+    const newUserAvatar = await User.findByIdAndUpdate(req.user._id, {avatar}, { new: true, runValidators: true }).orFail(() => new Error('NotFoundError'));
     res.status(200).send(newUserAvatar);
   } catch (error) {
     if (error.message === 'NotFoundError') {

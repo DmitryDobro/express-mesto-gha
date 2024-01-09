@@ -9,7 +9,6 @@ const getCards = async (req, res) => {
   }
 };
 const getCardById = async (req, res) => {
-  console.log(req.params);
   try {
     const { cardId } = req.params;
     const card = await Card.findById(cardId).orFail(() => new Error('NotFoundError'));
@@ -40,6 +39,7 @@ const createCard = async (req, res) => {
 };
 const deleteCard = async (req, res) => {
   try {
+    console.log(req.params);
     const deleteCard = await Card.findByIdAndDelete(req.params.cardId).orFail(() => new Error('NotFoundError'));
     return res.status(200).send(deleteCard);
   } catch (error) {
