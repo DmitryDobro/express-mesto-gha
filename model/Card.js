@@ -6,23 +6,23 @@ const cardScheme = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
     required: {
-      value:true,
-      message:" Поля name является обязательным"
+      value: true,
+      message: ' Поля name является обязательным',
     },
   },
   link: {
     type: String,
     required: {
-      value:true,
-      message:" Поля link является обязательным"
+      value: true,
+      message: ' Поля link является обязательным',
     },
   },
   owner: {
-    type: Object,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   likes: {
-    type: Object,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     default: [],
   },

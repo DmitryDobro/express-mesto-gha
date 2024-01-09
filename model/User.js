@@ -22,8 +22,8 @@ const userScheme = new mongoose.Schema({
   avatar: {
     type: String,
     required: {
-      value:true,
-      message:" Поля avatar является обязательным"
+      value: true,
+      message: ' Поля avatar является обязательным',
     },
   },
 });
