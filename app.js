@@ -13,8 +13,8 @@ app.use((req, res, next) => {
 });
 app.use(router);
 app.listen(3000, () => {
-  console.log(123);
+
 });
 module.exports.createCard = (req, res) => {
-  console.log(req.user._id);
+
 };

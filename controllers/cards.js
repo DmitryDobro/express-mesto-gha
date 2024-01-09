@@ -39,7 +39,6 @@ const createCard = async (req, res) => {
 };
 const deleteCard = async (req, res) => {
   try {
-    console.log(req.params);
     const deleteCard = await Card.findByIdAndDelete(req.params.cardId).orFail(() => new Error('NotFoundError'));
     return res.status(200).send(deleteCard);
   } catch (error) {
