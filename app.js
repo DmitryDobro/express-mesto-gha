@@ -13,7 +13,7 @@ app.use(router);
 app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
-  res.status(statusCode).send({ message: statusCode === 500 ? 'Ошибка на стороне сервера центральный' : message });
+  res.status(statusCode).send({ message: statusCode === 500 ? 'Ошибка на стороне сервера' : message });
   next();
 });
 app.listen(3000, () => {

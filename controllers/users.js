@@ -4,6 +4,7 @@ const User = require('../model/User');
 const NotFoundError = require('../errors/NotFoundErrors');
 const ValidationError = require('../errors/ValidationError');
 const AuthError = require('../errors/AuthError');
+const ConflictError = require('../errors/ConflictError');
 
 const login = async (req, res, next) => {
   try {
@@ -26,6 +27,14 @@ const login = async (req, res, next) => {
 const getUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
+    res.status(200).send(users);
+  } catch (error) {
+    next(error);
+  }
+};
+const getUserInfo = async (req, res, next) => {
+  try {
+    const users = await User.findById(req.user._id).orFail(() => new NotFoundError('Польователь по данному ID не найден'));
     res.status(200).send(users);
   } catch (error) {
     next(error);
@@ -57,6 +66,9 @@ const createUser = async (req, res, next) => {
     if (error.name === 'ValidationError') {
       next(new ValidationError('Пераданы не валидные данные'));
     }
+    if (error.code === 11000) {
+      next(new ConflictError('Пользовательс с такой почтой уже существут'));
+    }
     next(error);
   }
 };
@@ -86,5 +98,11 @@ const uppdateAvatarUser = async (req, res, next) => {
 };
 
 module.exports = {
-  getUsers, getUserById, createUser, uppdateUser, uppdateAvatarUser, login,
+  getUsers,
+  getUserById,
+  createUser,
+  uppdateUser,
+  uppdateAvatarUser,
+  login,
+  getUserInfo,
 };
