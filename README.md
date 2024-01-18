@@ -14,3 +14,13 @@
 
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
+
+    "name":"misha",
+    "avatar":"qwert",
+    "email": "yandex@mail.ru",
+    "password":"fff"
+65a60b7476e09983f44b5fe4
+
+    "email": "neyandex@mail.ru",
+    "password":"123456"
+65a8ea88fb0f9562ad32470f
