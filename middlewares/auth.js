@@ -15,8 +15,9 @@ const auth = (req, res, next) => {
   } catch (error) {
     if (error.message === 'NotAuthorization') {
       next(new AuthError('Неправильные почта или пароль'));
+    } else {
+      next(error);
     }
-    next(error);
   }
 };
 module.exports = auth;

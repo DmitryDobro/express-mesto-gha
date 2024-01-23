@@ -34,7 +34,7 @@ const getUsers = async (req, res, next) => {
 };
 const getUserInfo = async (req, res, next) => {
   try {
-    const users = await User.findById(req.user._id).orFail(() => new NotFoundError('Польователь по данному ID не найден'));
+    const users = await User.findById(req.user.userId).orFail(() => new NotFoundError('Польователь по данному ID не найден'));
     res.status(200).send(users);
   } catch (error) {
     next(error);
@@ -42,14 +42,15 @@ const getUserInfo = async (req, res, next) => {
 };
 const getUserById = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id).orFail(() => new NotFoundError('Польователь по данному ID не найден'));
+    const { userId } = req.params;
+    const user = await User.findById(userId).orFail(() => new NotFoundError('Польователь по данному ID не найден'));
     res.status(200).send(user);
   } catch (error) {
     if (error.name === 'CastError') {
       next(new ValidationError('Передан не корректный ID'));
+    } else {
+      next(error);
     }
-    next(error);
   }
 };
 const createUser = async (req, res, next) => {
@@ -68,8 +69,9 @@ const createUser = async (req, res, next) => {
     }
     if (error.code === 11000) {
       next(new ConflictError('Пользовательс с такой почтой уже существут'));
+    } else {
+      next(error);
     }
-    next(error);
   }
 };
 const uppdateUser = async (req, res, next) => {
@@ -80,8 +82,9 @@ const uppdateUser = async (req, res, next) => {
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new ValidationError('Пераданы не валидные данные'));
+    } else {
+      next(error);
     }
-    next(error);
   }
 };
 const uppdateAvatarUser = async (req, res, next) => {
@@ -92,8 +95,9 @@ const uppdateAvatarUser = async (req, res, next) => {
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new ValidationError('Пераданы не валидные данные'));
+    } else {
+      next(error);
     }
-    next(error);
   }
 };
 

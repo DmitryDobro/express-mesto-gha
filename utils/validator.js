@@ -46,6 +46,18 @@ const validateUpdateCard = celebrate({
     link: Joi.string().pattern(regex).required(),
   }),
 });
+// валидация  id
+const validateCardId = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().required().hex().length(24),
+  }),
+});
+
+const validateUserId = celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().required().hex().length(24),
+  }),
+});
 
 module.exports = {
   validateCreateUser,
@@ -54,4 +66,6 @@ module.exports = {
   validateUpdateateUser,
   validateUpdateateUserAvatar,
   validateUpdateCard,
+  validateCardId,
+  validateUserId,
 };

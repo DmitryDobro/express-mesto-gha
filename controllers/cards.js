@@ -15,12 +15,13 @@ const getCardById = async (req, res, next) => {
   try {
     const { cardId } = req.params;
     const card = await Card.findById(cardId).orFail(() => new NotFoundError('Карточка по данному ID не найдена'));
-    return res.status(200).send(card);
+    res.status(200).send(card);
   } catch (error) {
     if (error.name === 'CastError') {
       next(new ValidationError('Передан не валидный ID'));
+    } else {
+      next(error);
     }
-    return next(error);
   }
 };
 const createCard = async (req, res, next) => {
@@ -28,12 +29,13 @@ const createCard = async (req, res, next) => {
     const { name, link } = req.body;
     const owner = req.user._id;
     const newCard = await Card.create({ name, link, owner });
-    return res.status(201).send(newCard);
+    res.status(201).send(newCard);
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new ValidationError('Пераданы не валидные данные'));
+    } else {
+      next(error);
     }
-    return next(error);
   }
 };
 const deleteCard = async (req, res, next) => {
@@ -50,8 +52,9 @@ const deleteCard = async (req, res, next) => {
   } catch (error) {
     if (error.name === 'CastError') {
       next(new ValidationError('Передан не корректный ID'));
+    } else {
+      next(error);
     }
-    next(error);
   }
 };
 const putLikeCard = async (req, res, next) => {
@@ -65,8 +68,9 @@ const putLikeCard = async (req, res, next) => {
   } catch (error) {
     if (error.name === 'CastError') {
       next(new ValidationError('Передан не корректный ID'));
+    } else {
+      next(error);
     }
-    next(error);
   }
 };
 const deleteLikeCard = async (req, res, next) => {
@@ -80,11 +84,9 @@ const deleteLikeCard = async (req, res, next) => {
   } catch (error) {
     if (error.name === 'CastError') {
       next(new ValidationError('Передан не корректный ID'));
+    } else {
+      next(error);
     }
-    if (error.name === 'ValidationError') {
-      next(new ValidationError('Пераданы не валидные данные'));
-    }
-    next(error);
   }
 };
 module.exports = {
