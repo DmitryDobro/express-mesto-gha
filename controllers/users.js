@@ -66,8 +66,7 @@ const createUser = async (req, res, next) => {
   } catch (error) {
     if (error.name === 'ValidationError') {
       next(new ValidationError('Пераданы не валидные данные'));
-    }
-    if (error.code === 11000) {
+    } else if (error.code === 11000) {
       next(new ConflictError('Пользовательс с такой почтой уже существут'));
     } else {
       next(error);

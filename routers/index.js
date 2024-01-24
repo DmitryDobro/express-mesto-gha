@@ -7,7 +7,7 @@ const { validateCreateUser, validateUserAuth } = require('../utils/validator');
 const NotFoundError = require('../errors/NotFoundErrors');
 
 router.post('/signin', validateUserAuth, login);
-router.post('/signup', validateCreateUser, createUser);
+router.post('/signup', createUser);
 
 router.use('/users', auth, userRouter);
 router.use('/cards', auth, cardRouter);
